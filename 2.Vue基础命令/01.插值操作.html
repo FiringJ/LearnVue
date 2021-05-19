@@ -1,0 +1,40 @@
+<!--
+1.mustache语法
+2.v-once:单独使用,不再响应式渲染
+3.v-html:以html格式解析
+4.v-text:以text格式解析,覆盖
+5.v-pre:单独使用,直接展示,不解析渲染
+6.v-cloak:单独使用,遮罩,防止抖动,未渲染时display:none
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>插值操作</title>
+</head>
+<body>
+<div id="app">
+  <div>Mustache语法:{{message}}</div>
+  <div v-once>v-once只会渲染一次:{{message}}</div>
+  <div v-html="url">以html格式解析(此处文字渲染后被遮挡)</div>
+  <div v-text="url">以text格式解析(此处文字渲染后被遮挡)</div>
+  <div v-pre>v-pre不会渲染:{{message}}</div>
+  <div v-cloak>v-cloak渲染之后才展示:{{message}}</div>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+  setTimeout(function () {
+    const app = new Vue({
+      el: "#app",
+      data: {
+        message: 'Hello,World!',
+        url: '<a href="https://www.baidu.com">百度一下</a>'
+      },
+      methods: {
+      }
+    })
+  },2000);
+</script>
+</body>
+</html>

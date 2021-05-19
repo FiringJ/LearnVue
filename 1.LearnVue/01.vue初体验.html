@@ -1,0 +1,53 @@
+<!--
+1.声明式编程与命令式编程
+2.插值表达式
+3.let/const语法
+4.Vue实例的option
+5.Vue的响应式
+----------------------
+6.Vue列表展示,v-for的使用
+----------------------
+7.Vue计数器,v-on的使用,methods属性
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/vue.js"></script>
+  <title>vue初体验</title>
+</head>
+<body>
+<div id="app">
+  <!--    <ul>-->
+  <!--      <li v-for="item in movies">{{item}}</li>-->
+  <!--    </ul>-->
+
+  <div>当前计数为：{{counter}}</div>
+  <button @click="add">+</button>
+  <button @click="sub">-</button>
+</div>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      message: 'Hello,World!',
+      movies: ['神奇女侠', '花木兰', '阿凡达', '超人'],
+      counter: 0
+    },
+    methods: {
+      add: function () {
+        console.log('add被执行');
+        this.counter++;
+      },
+      sub: function () {
+        console.log('sub被执行');
+        this.counter--;
+
+      }
+    }
+  })
+</script>
+</body>
+</html>

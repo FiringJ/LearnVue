@@ -1,0 +1,69 @@
+<!--
+1.计算属性computed
+2.计算属性的复杂操作
+3.计算属性的set和get
+4.计算属性与methods的对比(缓存)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>计算属性</title>
+</head>
+<body>
+<div id="app">
+  <div>{{firstName+' '+lastName}}</div>
+  <div>{{firstName}} {{lastName}}</div>
+  <div>{{getFullName()}}</div>
+  <div>{{fullName}}</div>
+  <!--  -->
+  <div>{{totalDuration}}</div>
+  <!--  -->
+  <div>{{fullName1}}</div>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      firstName: 'Lebron',
+      lastName: 'James',
+      //
+      movies: [
+        {id: 1, name: '神奇女侠', duration: 158},
+        {id: 2, name: '花木兰', duration: 140},
+        {id: 3, name: '金刚大战特斯拉', duration: 130},
+        {id: 4, name: '阿凡达', duration: 160}
+      ]
+    },
+    methods: {
+      getFullName: function () {
+        return this.firstName + ' ' + this.lastName
+      }
+    },
+    computed: {
+      fullName: function () {
+        return this.firstName + ' ' + this.lastName
+      },
+      totalDuration: function () {
+        let res = 0;
+        for (let i = 0; i < this.movies.length; i++) {
+          res += this.movies[i].duration;
+        }
+        return res;
+      },
+      fullName1: {
+        set: function (newValue) {
+          let names = newValue.split(' ');
+          [this.firstName,this.lastName] = [names[0],names[1]];
+        },
+        get: function () {
+          return this.firstName + ' ' + this.lastName
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

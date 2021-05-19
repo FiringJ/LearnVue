@@ -1,0 +1,50 @@
+<!--
+1.块级作用域：let/var
+2.const: 不可修改,必须初始化,可改变对象内部属性
+3.对象字面量增强写法
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ES6语法补充</title>
+</head>
+<body>
+<button>按钮0</button>
+<button>按钮1</button>
+<button>按钮2</button>
+<button>按钮3</button>
+<button>按钮4</button>
+<!---->
+<!--1.ES5不使用闭包-->
+<script>
+  var btns = document.getElementsByTagName('button');
+  for (var i = 0; i < btns.length; i++){
+    btns[i].addEventListener('click',function () {
+      console.log('点击了第' + i + '个按钮');
+    })
+  }
+</script>
+<!--2.ES5使用闭包-->
+<script>
+  var btns = document.getElementsByTagName('button');
+  for (var i = 0; i < btns.length; i++){
+    (function (i) {
+      btns[i].addEventListener('click',function () {
+        console.log('点击了第' + i + '个按钮');
+      })
+    })(i)
+  }
+</script>
+<!--3.使用ES6语法-->
+<script>
+  const btns = document.getElementsByTagName('button');
+  for (let i = 0; i < btns.length; i++){
+    btns[i].addEventListener('click',function () {
+      console.log('点击了第' + i + '个按钮');
+    })
+  }
+</script>
+</body>
+</html>

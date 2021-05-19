@@ -1,0 +1,54 @@
+<!--
+1.v-bind动态绑定属性
+2.动态绑定class对象语法
+3.动态绑定class数组语法
+4.动态绑定style对象语法
+5.动态绑定style数组语法
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>动态绑定属性</title>
+  <style>
+    .active {
+      font-weight: bold;
+    }
+    .red {
+      color: red;
+    }
+    .blue {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <a :href="url">百度一下</a>
+
+  <div class="" :class="{active: isActive}">你好啊</div>
+  <div class="" :class="[color]">李银河</div>
+
+  <div :style="{fontSize: fontSize+'px'}">你好啊</div>
+  <div :style="[baseStyle]">李银河</div>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      url: 'https://www.baidu.com',
+      isActive: true,
+      color: 'red',
+      fontSize: 50,
+      baseStyle: {fontSize: '50px'}
+    },
+    methods: {
+
+    }
+  })
+</script>
+</body>
+</html>
