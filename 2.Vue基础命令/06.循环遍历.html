@@ -1,0 +1,73 @@
+<!--
+1.v-for遍历数组 (item,index)
+2.v-for遍历对象 (value,key,index)
+3.v-for绑定key (高效更新虚拟DOM)
+4.数组中哪些方法是响应式的
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>循环遍历</title>
+</head>
+<body>
+<div id="app">
+  <ul>
+    <li v-for="(item,index) in movies">{{index+1}}.{{item}}</li>
+  </ul>
+  <ul>
+    <li v-for="(value,key,index) in info">{{index+1}}.{{key}}--{{value}}</li>
+  </ul>
+  <br><br><br>
+  <ul>
+    <li v-for="item in movies" :key="item">{{item}}</li>
+  </ul>
+  <br><br><br>
+  <ul>
+    <li v-for="item in movies">{{item}}</li>
+  </ul>
+  <button @click="btnClick">操作</button>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      movies:['神奇女侠', '海王', '阿凡达', '花木兰'],
+      info: {
+        name: 'FiringJ',
+        age: '18',
+        height: '1.88'
+      }
+    },
+    methods: {
+      btnClick() {
+      /*
+        可以实现响应式
+        1.push
+        2.pop
+        3.shift
+        4.unshift
+        5.splice
+        6.sort
+        7.reverse
+        ----------------
+        movies[0]='xxx' 无法实现响应式
+      */
+        this.movies.push('金刚');
+        this.movies.pop();
+        this.movies.shift();
+        this.movies.unshift('蜘蛛侠');
+        this.movies.splice(1, 1);
+        this.movies.sort();
+        this.movies.reverse();
+        this.movies[0] = '雷神';
+        this.movies.splice(0, 1, '雷神');
+        Vue.set(this.movies, 0, '雷神');  //(对象, 索引, 元素值)
+      }
+    }
+  })
+</script>
+</body>
+</html>
