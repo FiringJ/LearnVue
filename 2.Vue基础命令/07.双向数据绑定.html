@@ -1,10 +1,99 @@
+<!--
+1.v-model的基本使用
+2.v-model结合radio类型使用: (1)实现互斥(省去name)  (2)给后台传值  (3)设置初始值
+3.v-model结合checkbox类型使用: (1)结合单选框  (2)结合多选框
+4.v-model结合select使用: (1)单选 (2)多选
+5.input中的值绑定: 值为后台数据
+6.v-model修饰符: .lazy(失焦/enter才传递数据) .number(传递数据为number类型) .trim(去除左右空格)
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>双向数据绑定</title>
 </head>
 <body>
-$END$
+<div id="app">
+  <label for="msg"></label>
+  <input type="text" id="msg" v-model="msg">
+  {{msg}}
+  <br><br>
+  <label for="message"></label>
+  <input type="text" id="message" :value="message" @input="message = $event.target.value">
+  {{message}}
+  <br><br>
+
+  <label>男
+    <input type="radio" v-model="sex" value="男">
+  </label>
+  <label>女
+    <input type="radio" v-model="sex" value="女">
+  </label>
+  {{sex}}
+  <br><br>
+
+  <input type="checkbox" value="苹果" v-model="fruit">苹果
+  <input type="checkbox" value="香蕉" v-model="fruit">香蕉
+  <input type="checkbox" value="葡萄" v-model="fruit">葡萄
+  <input type="checkbox" value="榴莲" v-model="fruit">榴莲
+  {{fruit}}
+  <br><br>
+
+  <label for="agreement"></label>
+  <input type="checkbox" id="agreement" v-model="agreement">同意协议
+  {{agreement}}
+  <br><br>
+
+  <select name="instrument" id="instrument" v-model="instrument">
+    <option value="手风琴">手风琴</option>
+    <option value="钢琴">钢琴</option>
+    <option value="小提琴">小提琴</option>
+    <option value="贝斯">贝斯</option>
+  </select>
+  {{instrument}}
+  <br><br>
+
+  <select name="hobbies" id="hobbies" v-model="hobbies" multiple>
+    <option value="游泳">游泳</option>
+    <option value="击剑">击剑</option>
+    <option value="田径">田径</option>
+    <option value="滑冰">滑冰</option>
+  </select>
+  {{hobbies}}
+  <br><br>
+
+  <label :for="hobby" v-for="hobby in originHobbies">
+    <input type="checkbox" :value="hobby" :id="hobby" v-model="finalHobbies">
+    {{hobby}}
+  </label>
+  {{finalHobbies}}
+  <br><br>
+
+  <input type="text" v-model.lazy="info">{{info}}<br>
+  <input type="number" v-model.number="num">{{num}}-{{typeof num}}<br>
+  <input type="text" v-model.trim="data">{{data}}<br>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      msg: 'Hello,Vue',
+      message: 'Hello,World',
+      sex: '男',
+      fruit: [],
+      agreement: false,
+      instrument: '',
+      hobbies: [],
+      originHobbies: ['篮球', '足球', '击剑', '赛跑', '游泳', '体操', '滑冰', '橄榄球'],
+      finalHobbies: [],
+      info: '',
+      num: 0,
+      data: ''
+    },
+    methods: {}
+  })
+</script>
 </body>
 </html>

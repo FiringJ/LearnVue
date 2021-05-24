@@ -1,0 +1,75 @@
+<!--
+1.父访问子: $children, $refs
+  $children: 数组类型,根据下标索引
+  $refs: 对象类型,使用时需要ref属性
+2.子访问父: $parent, $root
+  $parent: 访问父节点
+  $root: 访问根节点
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件的访问</title>
+</head>
+<body>
+<div id="app">
+  <cpn ref="cpn3"></cpn>
+  <button @click="btnClick">根组件-按钮</button>
+</div>
+<script src="../js/vue.js"></script>
+
+<template id="cpn">
+  <div>
+    <div>我是父组件</div>
+    <ccpn></ccpn>
+  </div>
+</template>
+<template id="ccpn">
+  <div>
+    <div>我是子组件</div>
+    <button @click="btnClick">子组件-按钮</button>
+  </div>
+</template>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+    },
+    methods: {
+      btnClick() {
+        console.log(this.$children);
+        console.log(this.$children[0].name);
+        console.log(this.$refs.cpn3);
+        console.log(this.$refs.cpn3.name);
+      }
+    },
+    components: {
+      cpn: {
+        template: "#cpn",
+        data() {
+          return {
+            name: 'cpn'
+          }
+        },
+        methods: {
+        },
+        components: {
+          ccpn: {
+            template: "#ccpn",
+            methods: {
+              btnClick() {
+                console.log(this.$parent);
+                console.log(this.$root);
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,10 +1,118 @@
+<!--
+1.创建组件构造器对象 Vue.extend(template：``)
+2.注册组件 Vue.component(标签名, 构造器对象) [全局组件]
+3.使用组件 <cpn></cpn>(Vue实例内使用)
+----------------------------------------------------
+4.全局组件与局部组件: 全局Vue.component()  局部:Vue实例对象-components{标签名: 构造器对象}
+5.父组件与子组件: 构造器对象使用components注册组件,形成组件的父子关系
+6.注册组件的语法糖(标签名改成连字符)
+7.组件模板抽离的写法 (1)使用script标签 (2)使用template标签
+---------------------------------------------------
+8.组件中的数据存放：组件数据存放在组件data中, data必须为函数类型(每个组件实例维护一份数据,防止相互影响)
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>组件化开发</title>
 </head>
 <body>
-$END$
+<div id="app">
+  <!-- 3.使用组件 -->
+  <my-cpn></my-cpn>
+  <cpn></cpn>
+  <cpn2></cpn2>
+  <cpn-a></cpn-a>
+  <cpn-b></cpn-b>
+  <cpn3></cpn3>
+  <cpn4></cpn4>
+  <counter></counter>
+  <counter></counter>
+</div>
+<script src="../js/vue.js"></script>
+<script type="text/x-template" id="cpn3">
+  <h1>我是标题3</h1>
+</script>
+<template id="cpn4">
+  <h1>我是标题4</h1>
+</template>
+<template id="counter">
+  <div>
+    <h2>当前计数值为: {{counter}}</h2>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+  </div>
+</template>
+<script>
+  // 1.创建组件构造器对象
+  const cpnC = Vue.extend({   //cpnC2的子组件
+    template: `
+    <div>
+      <h2>标题</h2>
+      <p>这是第一段</p>
+      <p>这是第二段</p>
+    </div>`
+  });
+  const cpnC2 = Vue.extend({  //cpnC的父组件
+    template: `
+      <div>
+        <h1>大标题</h1>
+        <cpn1></cpn1>
+      </div>
+    `,
+    components: {
+      cpn1: cpnC
+    }
+  })
+  // 2.注册组件
+  Vue.component('my-cpn', cpnC);
+  // 组件注册的语法糖
+  Vue.component('cpnA', {
+    template: `
+    <div>
+      <h2>标题A</h2>
+      <p>这是第一段</p>
+      <p>这是第二段</p>
+    </div>`
+  })
+  Vue.component('cpn3', {
+    template: '#cpn3'
+  });
+  Vue.component('counter', {
+    template: "#counter",
+    data() {
+      return {
+        counter: 0
+      }
+    },
+    methods: {
+      increment() {
+        this.counter++
+      },
+      decrement() {
+        this.counter--
+      }
+    }
+  })
+  const app = new Vue({   // root组件
+    el: "#app",
+    components: {
+      cpn: cpnC,
+      cpn2: cpnC2,
+      cpnB: {
+        template: `
+        <div>
+          <h2>标题B</h2>
+          <p>这是第一段</p>
+          <p>这是第二段</p>
+        </div>`
+      },
+      cpn4: {
+        template: '#cpn4'
+      }
+    }
+  });
+</script>
 </body>
 </html>

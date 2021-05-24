@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn :number1="num1" :number2="num2" @num1change="num1change" @num2change="num2change"></cpn>
+</div>
+<script src="../js/vue.js"></script>
+<template id="temp">
+  <div>
+    <div>number1: {{number1}}</div>
+    <div>dnumber1: {{dnumber1}}</div>
+    <div>
+      <label>
+        <!--        <input type="text" :value="number1" @input="num1input">-->
+        <input type="text" v-model="dnumber1">
+      </label>
+    </div>
+    <div>number2: {{dnumber2}}</div>
+    <div>dnumber2: {{number2}}</div>
+    <div>
+      <label>
+        <!--        <input type="text" :value="number2" @input="num2input">-->
+        <input type="text" v-model="dnumber2">
+      </label>
+    </div>
+  </div>
+</template>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      num1: 0,
+      num2: 0
+    },
+    components: {
+      cpn: {
+        template: "#temp",
+        data() {
+          return {
+            dnumber1: this.number1,
+            dnumber2: this.number2
+          }
+        },
+        props: {
+          number1: Number,
+          number2: Number
+        },
+        methods: {
+          num1input(event) {
+            this.dnumber1 = event.target.value;
+            this.$emit('num1change', this.dnumber1);
+          },
+          num2input(event) {
+            this.dnumber2 = event.target.value;
+            this.$emit('num2change', this.dnumber2);
+          }
+        },
+        watch: {
+          dnumber1(newVal) {
+            this.$emit('num1change', newVal)
+          },
+          dnumber2(newVal) {
+            this.$emit('num2change', newVal)
+          }
+        }
+      }
+    },
+    methods: {
+      num1change(value) {
+        this.num1 = parseFloat(value);
+      },
+      num2change(value) {
+        this.num2 = parseFloat(value);
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!--
+1.插槽的基本使用:   <slot></slot>   <slot>button</slot>  slot可以替换多个元素
+2.具名插槽的使用:   <slot name='xxx'></slot>
+3.变量的作用域:    只会在当前模板内查找data
+4.作用域插槽的使用:
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>插槽的使用</title>
+</head>
+<body>
+<div id="app">
+  <cpn></cpn>
+  <cpn><span>我是span元素</span></cpn>
+  <cpn>
+    <span>我是span元素</span>
+    <p>我是p元素</p>
+  </cpn>
+  <cpn2></cpn2>
+  <cpn2><span slot="center">标题</span></cpn2>
+  <cpn2><button slot="left">返回</button></cpn2>
+  <cpn2>
+    <button slot="left">返回</button>
+    <span slot="center">标题</span>
+    <span slot="right">
+      <span>1</span>
+      <span>2</span>
+    </span>
+  </cpn2>
+  <cpn3 v-show="isShow"></cpn3>
+  <cpn4>
+    <template slot-scope="slot">
+      <span>{{slot.data.join(' - ')}}</span>
+    </template>
+  </cpn4>
+</div>
+<script src="../js/vue.js"></script>
+
+<template id="cpn">
+  <div>
+    <div>我是cpn组件</div>
+    <slot><button>按钮</button></slot>
+  </div>
+</template>
+<template id="cpn2">
+  <div>
+    <slot name="left">左边</slot>
+    <slot name="center">中间</slot>
+    <slot name="right">右边</slot>
+  </div>
+</template>
+<template id="cpn3">
+  <div>
+    <div>我是子组件3</div>
+    <button v-show="isShow">按钮</button>
+  </div>
+</template>
+<template id="cpn4">
+  <div>
+    <slot :data="languages">
+      <ul>
+        <li v-for="item in languages">{{item}}</li>
+      </ul>
+    </slot>
+  </div>
+</template>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      isShow: true
+    },
+    components: {
+      cpn: {
+        template: "#cpn"
+      },
+      cpn2: {
+        template: "#cpn2"
+      },
+      cpn3: {
+        template: "#cpn3",
+        data() {
+          return {
+            isShow: false
+          }
+        }
+      },
+      cpn4: {
+        template: "#cpn4",
+        data() {
+          return {
+            languages: ['Java', 'C++', 'Python', 'JavaScript']
+          };
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

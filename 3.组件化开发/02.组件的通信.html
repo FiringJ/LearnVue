@@ -1,0 +1,83 @@
+<!--
+1.父组件向子组件传递数据 props
+2.props 数组写法/对象写法
+3.props 驼峰标识
+-----------------------------
+4.子组件向父组件传递数据 自定义事件 子组件template-$emit - 组件使用处接收 - 父组件处理
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件通信</title>
+</head>
+<body>
+  <div id="app">
+    <cpn :cmovies="movies" :c-message="message"></cpn>
+    <cpn-child @item-click="itemClick"></cpn-child>
+  </div>
+  <template id="cpn">
+    <div>
+      <h1>组件cpn</h1>
+      <div>{{cmovies}}</div>
+      <div>{{cMessage}}</div>
+    </div>
+  </template>
+  <template id="cpnChild">
+    <div>
+      <button v-for="item in categories" @click="btnClick(item)">{{item.name}}</button>
+    </div>
+  </template>
+  <script src="../js/vue.js"></script>
+  <script>
+    Vue.component('cpn', {
+      template: "#cpn",
+      // props: ['cmovies']
+      props: {
+        cmovies: {
+          type: Array,
+          default() {
+            return []
+          },
+          required: true
+        },
+        cMessage: {
+          type: String,
+          default: ''
+        }
+      }
+    })
+    Vue.component('cpn-child', {
+      template: "#cpnChild",
+      data() {
+        return {
+          categories: [
+            {id: 1, name: '精品推荐'},
+            {id: 2, name: '家用电器'},
+            {id: 3, name: '电脑办公'}
+          ]
+        }
+      },
+      methods: {
+        btnClick(item) {
+          this.$emit('item-click', item);
+        }
+      }
+    })
+
+    const app = new Vue({
+      el: "#app",
+      data: {
+        movies: ['神奇女侠', '花木兰', '幽灵公主', '白雪公主'],
+        message: '你好呀'
+      },
+      methods: {
+        itemClick(item) {
+          console.log(item);
+        }
+      }
+    })
+  </script>
+</body>
+</html>
